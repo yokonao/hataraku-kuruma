@@ -74,3 +74,17 @@ func TestRandomNoRepeat(t *testing.T) {
 		prev = v
 	}
 }
+
+func TestSmoke(t *testing.T) {
+	v := Vehicle{Lights: []string{""}, Art: []string{"ab"}, Smoke: true, Exhaust: 1}
+	got := v.Frame(0, 0, 100, false)
+	if v.Height() != len(smoke[0])+1 || len(got) != v.Height() {
+		t.Fatalf("Height() = %d, %d lines, want %d", v.Height(), len(got), len(smoke[0])+1)
+	}
+	if want := " " + smoke[0][0]; got[0] != want {
+		t.Errorf("top row = %q, want %q", got[0], want)
+	}
+	if got[len(got)-1] != "ab" {
+		t.Errorf("bottom row = %q, want %q", got[len(got)-1], "ab")
+	}
+}
