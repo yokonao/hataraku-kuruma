@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.0 - 2026-10-17
+
+### Changed
+
+- Vehicles are drawn about twice as large, close to the size of sl's train.
+- Trucks and construction machines puff smoke, and crawler tracks show spinning rollers.
+
 ## v0.2.0 - 2026-10-17
 
 ### Added
