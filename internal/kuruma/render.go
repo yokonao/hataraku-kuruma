@@ -33,12 +33,13 @@ func (v Vehicle) Width() int {
 func (v Vehicle) Height() int { return len(v.Art) }
 
 // Frame renders animation frame n with the vehicle's left edge at column x,
-// clipped to columns [0, width).
+// clipped to columns [0, width). Lines start at column 0.
 func (v Vehicle) Frame(n, x, width int, color bool) []string {
 	lights := n / 4 % 2
 	lines := make([]string, len(v.Art))
 	for row, art := range v.Art {
 		var b strings.Builder
+		b.WriteString(strings.Repeat(" ", min(max(x, 0), width)))
 		cur := ""
 		for i := range len(art) {
 			col := x + i

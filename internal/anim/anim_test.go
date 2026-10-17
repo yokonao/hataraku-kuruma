@@ -15,7 +15,7 @@ func TestRun(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := strings.Split(b.String(), "\x1b[1;1H\x1b[2K")
-	want := []string{"\x1b[?1049h\x1b[?25l", "a", "ab", "ab", "b\x1b[?25h\x1b[?1049l"}
+	want := []string{"\x1b[?1049h\x1b[?25l", "  a", " ab", "ab", "b\x1b[?25h\x1b[?1049l"}
 	if strings.Join(got, "|") != strings.Join(want, "|") {
 		t.Errorf("got %q, want %q", got, want)
 	}
