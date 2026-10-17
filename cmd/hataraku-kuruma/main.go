@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"math/rand/v2"
 	"os"
 	"os/signal"
 	"syscall"
@@ -32,6 +31,7 @@ func newRootCmd() *cobra.Command {
 	var (
 		kind    string
 		list    bool
+		loop    bool
 		delay   time.Duration
 		noColor bool
 	)
@@ -50,11 +50,19 @@ func newRootCmd() *cobra.Command {
 			if delay <= 0 {
 				return fmt.Errorf("--delay must be positive")
 			}
-			v := kuruma.All[rand.N(len(kuruma.All))]
+			next := kuruma.Random()
 			if kind != "" {
-				var ok bool
-				if v, ok = kuruma.Lookup(kind); !ok {
+				v, ok := kuruma.Lookup(kind)
+				if !ok {
 					return fmt.Errorf("unknown vehicle %q (see --list)", kind)
+				}
+				next = func() kuruma.Vehicle { return v }
+			}
+			vehicles := func(yield func(kuruma.Vehicle) bool) {
+				for {
+					if !yield(next()) || !loop {
+						return
+					}
 				}
 			}
 			fd := int(os.Stdout.Fd())
@@ -63,11 +71,12 @@ func newRootCmd() *cobra.Command {
 				width, height = 80, 24
 			}
 			color := !noColor && os.Getenv("NO_COLOR") == "" && term.IsTerminal(fd)
-			return anim.Run(cmd.Context(), os.Stdout, v, width, height, delay, color)
+			return anim.Run(cmd.Context(), os.Stdout, vehicles, width, height, delay, color)
 		},
 	}
 	root.Flags().StringVarP(&kind, "kind", "k", "", "vehicle to drive instead of a random one")
 	root.Flags().BoolVarP(&list, "list", "l", false, "list the vehicles")
+	root.Flags().BoolVar(&loop, "loop", false, "keep driving vehicles until interrupted")
 	root.Flags().DurationVar(&delay, "delay", 40*time.Millisecond, "time per frame")
 	root.Flags().BoolVar(&noColor, "no-color", false, "disable colors (also NO_COLOR)")
 	return root

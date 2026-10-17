@@ -21,7 +21,7 @@ See [docs/install.md](docs/install.md) for other install methods and how to veri
 ## Usage
 
 ```
-hataraku-kuruma [--kind NAME] [--delay DURATION] [--no-color]
+hataraku-kuruma [--kind NAME] [--loop] [--delay DURATION] [--no-color]
 hataraku-kuruma --list
 ```
 
@@ -29,6 +29,7 @@ hataraku-kuruma --list
 | -------------- | ------- | ---------------------------------------- |
 | `-k`, `--kind` | random  | vehicle to drive (see `--list`)          |
 | `-l`, `--list` |         | list the vehicles                        |
+| `--loop`       |         | keep driving vehicles until Ctrl-C       |
 | `--delay`      | `40ms`  | time per frame                           |
 | `--no-color`   |         | disable colors; `NO_COLOR` also disables |
 

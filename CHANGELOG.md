@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.0 - 2026-10-17
+
+### Added
+
+- `--loop` keeps driving vehicles until interrupted. Random vehicles never repeat back to back; with `--kind`, the same vehicle drives again and again.
+
 ## v0.1.1 - 2026-10-17
 
 ### Fixed
