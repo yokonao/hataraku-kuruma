@@ -1,5 +1,7 @@
 package kuruma
 
+import "math/rand/v2"
+
 // Placeholders in Art that animate per frame:
 //
 //	@  wheel hub, spinning through - \ | /
@@ -134,4 +136,18 @@ func Lookup(name string) (Vehicle, bool) {
 		}
 	}
 	return Vehicle{}, false
+}
+
+// Random returns a generator of random vehicles that never repeats the
+// previous one.
+func Random() func() Vehicle {
+	prev := -1
+	return func() Vehicle {
+		i := rand.N(len(All))
+		if prev >= 0 && len(All) > 1 {
+			i = (prev + 1 + rand.N(len(All)-1)) % len(All)
+		}
+		prev = i
+		return All[i]
+	}
 }

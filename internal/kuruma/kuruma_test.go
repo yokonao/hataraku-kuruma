@@ -62,3 +62,15 @@ func TestLookup(t *testing.T) {
 		t.Error("tank found")
 	}
 }
+
+func TestRandomNoRepeat(t *testing.T) {
+	next := Random()
+	prev := next()
+	for range 1000 {
+		v := next()
+		if v.Name == prev.Name {
+			t.Fatalf("%s twice in a row", v.Name)
+		}
+		prev = v
+	}
+}
