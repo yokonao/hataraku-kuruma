@@ -33,8 +33,8 @@ func TestFrameClips(t *testing.T) {
 	}{
 		{0, 0, 10, []string{"ab(-)*", "=-=-"}},
 		{1, -2, 10, []string{"(\\)*", "-="}},
-		{4, 7, 10, []string{"ab(", "=-="}},
-		{0, 10, 10, []string{"", ""}},
+		{4, 7, 10, []string{"       ab(", "       =-="}},
+		{0, 10, 10, []string{"          ", "          "}},
 		{0, -6, 10, []string{"", ""}},
 	}
 	for _, tt := range tests {
